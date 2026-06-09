@@ -61,7 +61,7 @@ export class TodosAccess {
     return todo
   }
 
-  async updateTodo(todoId, userId, updatedTodo) {
+  async updateTodo({ todoId, userId, name, dueDate, done }) {
     logger.info(`Updating a todo with id ${todoId} for user ${userId}`)
 
     const result = await this.dynamoDbClient.update({
@@ -75,9 +75,9 @@ export class TodosAccess {
         '#name': 'name' // "name" is a DynamoDB reserved keyword, so it requires an alias
       },
       ExpressionAttributeValues: {
-        ':name': updatedTodo.name,
-        ':dueDate': updatedTodo.dueDate,
-        ':done': updatedTodo.done
+        ':name': name,
+        ':dueDate': dueDate,
+        ':done': done
       },
       ReturnValues: 'ALL_NEW'
     })

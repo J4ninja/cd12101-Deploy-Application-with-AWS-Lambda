@@ -94,7 +94,7 @@ export function Todos() {
       const todo = todos[pos]
       const accessToken = await getAccessTokenSilently({
         audience,
-        scope: 'write:todo'
+        scope: 'write:todos'
       })
       await patchTodo(accessToken, todo.todoId, {
         name: todo.name,

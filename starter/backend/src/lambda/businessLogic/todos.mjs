@@ -37,9 +37,7 @@ export async function updateTodo(todoId, updateTodoRequest, userId) {
   return await todoAccess.updateTodo({
     todoId: todoId, 
     userId: userId,
-    name: updateTodoRequest.name,
-    dueDate: updateTodoRequest.dueDate,
-    done: updateTodoRequest.done
+    ...updateTodoRequest
   })
 }
 
