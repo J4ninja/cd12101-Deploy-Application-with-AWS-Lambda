@@ -6,10 +6,13 @@
     "name": {
       "type": "string"
     },
+    "attachmentUrl": {
+      "type": "string"
+    },
     "dueDate": {
       "type": "string"
     },
-    "attachmentUrl": {
+    "createdAt": {
       "type": "string"
     },
     "done": {
