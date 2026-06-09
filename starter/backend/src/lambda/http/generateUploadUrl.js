@@ -4,6 +4,7 @@ import httpErrorHandler from '@middy/http-error-handler'
 import { todoExists, getUploadUrl } from '../fileStorage/attachmentUtils.mjs'
 import { getUserId } from '../auth/utils.mjs'
 import { createLogger } from '../../utils/logger.mjs'
+import { v4 as uuidv4 } from 'uuid'
 
 const logger = createLogger('generateUploadUrl')
 
@@ -11,21 +12,21 @@ export const handler = middy()
   .use(httpErrorHandler())
   .use(
     cors({
-      credntials: true
+      credentials: true
     })
   )
   .handler(async (event) => {
     logger.info('Processing event: ', event)
-    const imageId = event.pathParameters.groupId
-    const validGroupId = await todoExists(groupId)
-    const newTodo = JSON.parse(event.body)
+    const todoId = event.pathParameters.todoId
+    const userId = getUserId(event)
+    const validTodoId = await todoExists(userId, todoId)
 
     if (!validTodoId) {
       return {
         statusCode: 404,
         body: JSON.stringify({
-        error: 'Todo does not exist'
-      })
+          error: 'Todo does not exist'
+        })
       }
     }
     

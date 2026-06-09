@@ -11,7 +11,7 @@ export const handler = middy()
   .use(httpErrorHandler())
   .use(
     cors({
-      credntials: true
+      credentials: true
     })
   )
   .handler(async (event) => {

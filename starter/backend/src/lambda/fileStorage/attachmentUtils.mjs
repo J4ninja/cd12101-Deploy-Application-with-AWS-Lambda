@@ -3,7 +3,6 @@ import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb'
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import AWSXRay from 'aws-xray-sdk-core'
-import { v4 as uuidv4 } from 'uuid'
 import { createLogger } from '../../utils/logger.mjs'
 
 const logger = createLogger('attachmentUtils')
@@ -17,11 +16,12 @@ const bucketName = process.env.IMAGES_S3_BUCKET
 const urlExpiration = parseInt(process.env.SIGNED_URL_EXPIRATION)
 
 
-async function todoExists(todoId) {
+async function todoExists(userId, todoId) {
   const result = await dynamoDbClient.get({
     TableName: todosTable,
     Key: {
-      id: todoId
+      userId,
+      todoId
     }
   })
 
