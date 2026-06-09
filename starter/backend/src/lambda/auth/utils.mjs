@@ -1,3 +1,6 @@
+// code taken from https://github.com/udacity/cd12101-lesson-demos-and-exercise-starters-solutions
+
+
 import { parseUserId } from '../../auth/utils.mjs'
 
 export function getUserId(authorizationHeader) {

@@ -1,3 +1,5 @@
+// code taken from https://github.com/udacity/cd12101-lesson-demos-and-exercise-starters-solutions
+
 import { decode } from 'jsonwebtoken'
 import { createLogger } from '../utils/logger.mjs'
 

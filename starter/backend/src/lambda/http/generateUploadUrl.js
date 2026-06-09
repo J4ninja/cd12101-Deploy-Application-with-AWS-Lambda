@@ -1,3 +1,5 @@
+// code derived from https://github.com/udacity/cd12101-lesson-demos-and-exercise-starters-solutions
+
 import middy from '@middy/core'
 import cors from '@middy/http-cors'
 import httpErrorHandler from '@middy/http-error-handler'
