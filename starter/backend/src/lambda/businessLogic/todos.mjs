@@ -1,13 +1,11 @@
 import * as uuid from 'uuid'
 
-import { TodoAccess } from '../dataLayer/todosAccess.mjs'
+import { TodosAccess } from '../dataLayer/todosAccess.mjs'
 
-const todoAccess = new TodoAccess()
+const todoAccess = new TodosAccess()
 
-const todosCreatedAtIndex = process.env.TODOS_CREATED_AT_INDEX
-
-export async function getAllTodos() {
-  return todoAccess.getAllTodos()
+export async function getAllTodos(userId) {
+  return todoAccess.getAllTodos(userId)
 }
 
 export async function createTodo(createTodoRequest, userId) {
@@ -16,7 +14,7 @@ export async function createTodo(createTodoRequest, userId) {
   return await todoAccess.createTodo({
     todoId: itemId,
     userId: userId,
-    createdAt: todosCreatedAtIndex,
+    createdAt: new Date().toISOString(),
     name: createTodoRequest.name,
     dueDate: createTodoRequest.dueDate
   })

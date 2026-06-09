@@ -5,32 +5,32 @@ import AWSXRay from 'aws-xray-sdk-core'
 export class TodosAccess {
   constructor(
     documentClient = AWSXRay.captureAWSv3Client(new DynamoDB()),
-    todosTable = process.env.TODOS_TABLE
+    todosTable = process.env.TODOS_TABLE,
+    todosCreatedAtIndex = process.env.TODOS_CREATED_AT_INDEX
   ) {
     this.documentClient = documentClient
     this.todosTable = todosTable
+    this.todosCreatedAtIndex = todosCreatedAtIndex
     this.dynamoDbClient = DynamoDBDocument.from(this.documentClient)
   }
 
-  async getAllTodoss() {
+  async getAllTodos(userId) {
     console.log('Getting all todos')
 
-    // const result = await this.dynamoDbClient.scan({
-    //   TableName: this.todosTable
-    // })
     const result = await this.dynamoDbClient.query({
       TableName: this.todosTable,
-      IndexName: this.indexName,
-      KeyConditionExpression: 'paritionKey = :paritionKey',
-        ExpressionAttributeValues: {
-        ':paritionKey': partitionKeyValue
-        }
+      IndexName: this.todosCreatedAtIndex,
+      KeyConditionExpression: 'userId = :userId',
+      ExpressionAttributeValues: {
+        ':userId': userId
+      },
+      ScanIndexForward: true
     })
 
     return result.Items
   }
 
-  async createTodos(todo) {
+  async createTodo(todo) {
     console.log(`Creating a todo with id ${todo.id}`)
 
     await this.dynamoDbClient.put({
@@ -41,7 +41,7 @@ export class TodosAccess {
     return todo
   }
 
-  async deleteTodos(todo) {
+  async deleteTodo(todo) {
     console.log(`Deleting a todo with id ${todo.id}`)
 
     await this.dynamoDbClient.delete({
@@ -52,7 +52,7 @@ export class TodosAccess {
     return todo
   }
 
-  async updateTodos(todo) {
+  async updateTodo(todo) {
     console.log(`Updating a todo with id ${todo.id}`)
 
     await this.dynamoDbClient.update({
