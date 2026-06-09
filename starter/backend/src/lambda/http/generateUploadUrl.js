@@ -1,7 +1,7 @@
 import middy from '@middy/core'
 import cors from '@middy/http-cors'
 import httpErrorHandler from '@middy/http-error-handler'
-import { todoExists, createImage, getUploadUrl } from '../fileStorage/attachmentUtils.mjs'
+import { todoExists, getUploadUrl } from '../fileStorage/attachmentUtils.mjs'
 import { getUserId } from '../auth/utils.mjs'
 import { createLogger } from '../../utils/logger.mjs'
 
@@ -30,7 +30,6 @@ export const handler = middy()
     }
     
     const imageId = uuidv4()
-    const newItem = await createImage(todoId, imageId, event)
 
     const url = await getUploadUrl(imageId)
 
