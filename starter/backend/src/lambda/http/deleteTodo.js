@@ -21,10 +21,9 @@ export const handler = middy()
     
     const authorization = event.headers.Authorization
     const userId = getUserId(authorization)
-    const deleteItem = await deleteTodo(todoId, userId)
+    await deleteTodo(todoId, userId)
 
     return {
-      statusCode: 204,
-      body:{}
+      statusCode: 204
     }
   })
