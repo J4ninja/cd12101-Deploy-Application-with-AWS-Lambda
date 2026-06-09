@@ -45,7 +45,8 @@ export async function handler(event) {
 async function verifyToken(authHeader) {
   const token = getToken(authHeader)
   const jwt = jsonwebtoken.decode(token, { complete: true })
-
+  const secret = process.env.JWT_SECRET
+  
   // TODO: Implement token verification
   return undefined;
 }
