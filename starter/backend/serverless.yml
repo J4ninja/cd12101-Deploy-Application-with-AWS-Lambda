@@ -91,6 +91,9 @@ functions:
           authorizer: Auth
           path: todos/{todoId}
           cors: true
+          request:
+            schemas:
+              application/json: ${file(models/update-todo-request.json)}
     iamRoleStatements:
       - Effect: Allow
         Action:

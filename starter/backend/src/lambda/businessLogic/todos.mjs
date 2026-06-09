@@ -5,6 +5,11 @@ import * as uuid from 'uuid'
 
 import { TodosAccess } from '../dataLayer/todosAccess.mjs'
 
+import { createLogger } from '../../utils/logger.mjs'
+
+const logger = createLogger('todos')
+import createError from 'http-errors'
+
 const todoAccess = new TodosAccess()
 
 export async function getAllTodos(userId) {
@@ -13,6 +18,16 @@ export async function getAllTodos(userId) {
 
 export async function createTodo(createTodoRequest, userId) {
   const itemId = uuid.v4()
+
+  if (!createTodoRequest.name || createTodoRequest.trim() == "") {
+    logger.error("Todo Requires name")
+    throw new createError.BadRequest('Todo name is required and cannot be empty')
+  }
+
+  if (!createTodoRequest.dueDate || createTodoRequest.trim() == "") {
+    logger.error("Todo Requires date")
+    throw new createError.BadRequest('Todo dueDate is required and cannot be empty')
+  }
 
   return await todoAccess.createTodo({
     todoId: itemId,
