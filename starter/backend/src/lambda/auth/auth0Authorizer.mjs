@@ -78,3 +78,15 @@ async function verifyToken(authHeader) {
     audience: 'https://1pk6kx4jsk.execute-api.us-east-1.amazonaws.com/dev'
   })
 }
+
+function getToken(authHeader) {
+  if (!authHeader) throw new Error('No authentication header')
+
+  if (!authHeader.toLowerCase().startsWith('bearer '))
+    throw new Error('Invalid authentication header')
+
+  const split = authHeader.split(' ')
+  const token = split[1]
+
+  return token
+}
