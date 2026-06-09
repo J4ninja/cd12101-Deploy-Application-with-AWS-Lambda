@@ -34,7 +34,7 @@ export class TodosAccess {
   }
 
   async createTodo(todo) {
-    logger.info(`Creating a todo with id ${todo.id}`)
+    logger.info(`Creating a todo with id ${todo.todoId}`)
 
     await this.dynamoDbClient.put({
       TableName: this.todosTable,
@@ -45,24 +45,57 @@ export class TodosAccess {
   }
 
   async deleteTodo(todo) {
-    logger.info(`Deleting a todo with id ${todo.id}`)
+    logger.info(`Deleting a todo with id ${todo.todoId}`)
 
+    const { todoId, userId } = todo
     await this.dynamoDbClient.delete({
       TableName: this.todosTable,
-      Item: todo
+      Key: {
+        userId: userId,
+        todoId: todoId
+      }
     })
 
     return todo
   }
 
-  async updateTodo(todo) {
-    logger.info(`Updating a todo with id ${todo.id}`)
+  async updateTodo(todoId, userId, updatedTodo) {
+    logger.info(`Updating a todo with id ${todoId} for user ${userId}`)
 
-    await this.dynamoDbClient.update({
+    const result = await this.dynamoDbClient.update({
       TableName: this.todosTable,
-      Item: todo
+      Key: {
+        userId: userId,
+        todoId: todoId
+      },
+      UpdateExpression: 'set #name = :name, dueDate = :dueDate, done = :done',
+      ExpressionAttributeNames: {
+        '#name': 'name' // "name" is a DynamoDB reserved keyword, so it requires an alias
+      },
+      ExpressionAttributeValues: {
+        ':name': updatedTodo.name,
+        ':dueDate': updatedTodo.dueDate,
+        ':done': updatedTodo.done
+      },
+      ReturnValues: 'ALL_NEW'
     })
 
-    return todo
+    return result.Attributes
   }
+
+  async updateAttachmentUrl(todoId, userId, attachmentUrl) {
+  logger.info(`Updating attachment URL for todo ${todoId} for user ${userId}`)
+
+  await this.dynamoDbClient.update({
+    TableName: this.todosTable,
+    Key: {
+      userId: userId,
+      todoId: todoId
+    },
+    UpdateExpression: 'set attachmentUrl = :attachmentUrl',
+    ExpressionAttributeValues: {
+      ':attachmentUrl': attachmentUrl
+    }
+  })
+}
 }

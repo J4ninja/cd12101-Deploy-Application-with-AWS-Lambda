@@ -21,7 +21,7 @@ export const handler = middy()
   
     const authorization = event.headers.Authorization
     const userId = getUserId(authorization)
-    const updateItem = await updateTodo(updatedTodo, userId)
+    const updateItem = await updateTodo(todoId, updatedTodo, userId)
 
     return {
       statusCode: 200,

@@ -2,6 +2,7 @@ import middy from '@middy/core'
 import cors from '@middy/http-cors'
 import httpErrorHandler from '@middy/http-error-handler'
 import { todoExists, getUploadUrl } from '../fileStorage/attachmentUtils.mjs'
+import { updateAttachmentUrl } from '../businessLogic/todos.mjs'
 import { getUserId } from '../auth/utils.mjs'
 import { createLogger } from '../../utils/logger.mjs'
 import { v4 as uuidv4 } from 'uuid'
@@ -30,10 +31,10 @@ export const handler = middy()
         })
       }
     }
-    
-    const imageId = uuidv4()
 
-    const url = await getUploadUrl(imageId)
+    const url = await getUploadUrl(todoId)
+
+    await updateAttachmentUrl(todoId, userId)
 
     return {
       statusCode: 201,

@@ -17,7 +17,6 @@ import { deleteTodo, getTodos, patchTodo } from '../api/todos-api'
 import { NewTodoInput } from './NewTodoInput'
 
 export function Todos() {
-  // const audience = // Change this line at the top of your Todos() function:
   const audience = process.env.REACT_APP_AUTH0_AUDIENCE
 
   function renderTodos() {
@@ -81,7 +80,7 @@ export function Todos() {
     try {
       const accessToken = await getAccessTokenSilently({
         audience,
-        scope: 'delete:todo'
+        scope: 'delete:todos'
       })
       await deleteTodo(accessToken, todoId)
       setTodos(todos.filter((todo) => todo.todoId !== todoId))

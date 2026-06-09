@@ -9,14 +9,16 @@ const logger = createLogger('attachmentUtils')
 
 const dynamoDb = AWSXRay.captureAWSv3Client(new DynamoDB())
 const dynamoDbClient = DynamoDBDocument.from(dynamoDb)
-const s3Client = new S3Client()
+
+const rawS3Client = new S3Client()
+const s3Client = AWSXRay.captureAWSv3Client(rawS3Client)
 
 const todosTable = process.env.TODOS_TABLE
 const bucketName = process.env.IMAGES_S3_BUCKET
 const urlExpiration = parseInt(process.env.SIGNED_URL_EXPIRATION)
 
 
-async function todoExists(userId, todoId) {
+export async function todoExists(userId, todoId) {
   const result = await dynamoDbClient.get({
     TableName: todosTable,
     Key: {
@@ -30,7 +32,7 @@ async function todoExists(userId, todoId) {
 }
 
 
-async function getUploadUrl(imageId) {
+export async function getUploadUrl(imageId) {
   const command = new PutObjectCommand({
     Bucket: bucketName,
     Key: imageId
