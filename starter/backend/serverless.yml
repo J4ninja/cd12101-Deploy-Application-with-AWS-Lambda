@@ -16,7 +16,6 @@ provider:
 
   environment:
     AUTH0_DOMAIN: dev-hr4orsyuk5xdeiz4.us.auth0.com
-    AUTH0_AUDIENCE: ${env:AUTH0_AUDIENCE}
     TODOS_TABLE: Todos-${self:provider.stage}
     IMAGES_S3_BUCKET: todo-images-743181764290-${self:provider.stage}
     SIGNED_URL_EXPIRATION: 300
