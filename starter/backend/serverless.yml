@@ -15,6 +15,8 @@ provider:
   region: 'us-east-1'
 
   environment:
+    AUTH0_DOMAIN: dev-hr4orsyuk5xdeiz4.us.auth0.com
+    AUTH0_AUDIENCE: ${env:AUTH0_AUDIENCE}
     TODOS_TABLE: Todos-${self:provider.stage}
     IMAGES_S3_BUCKET: todo-images-743181764290-${self:provider.stage}
     SIGNED_URL_EXPIRATION: 300
@@ -217,4 +219,5 @@ resources:
               Principal: '*'
               Action: 's3:GetObject'
               Resource: 'arn:aws:s3:::${self:provider.environment.IMAGES_S3_BUCKET}/*'
-        Bucket: !Ref AttachmentsBucket
+        Bucket:
+          Ref: AttachmentsBucket
