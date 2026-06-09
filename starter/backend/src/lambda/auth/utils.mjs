@@ -1,7 +1,7 @@
 import { parseUserId } from '../../auth/utils.mjs'
 
-export function getUserId(event) {
-  const authorization = event.headers.Authorization
+export function getUserId(authorizationHeader) {
+
   const split = authorization.split(' ')
   const jwtToken = split[1]
 

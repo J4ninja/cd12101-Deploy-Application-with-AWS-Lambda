@@ -7,7 +7,6 @@ import './index.css'
 
 const domain = process.env.REACT_APP_AUTH0_DOMAIN
 const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID
-// Ensure this matches your Auth0 dashboard API identifier EXACTLY
 const audience = process.env.REACT_APP_AUTH0_AUDIENCE
 
 ReactDOM.render(
@@ -16,10 +15,11 @@ ReactDOM.render(
     clientId={clientId}
     redirectUri={window.location.origin}
     audience={audience}
-    // 1. FIXED TYPO: Changed 'read:todo' to 'read:todos' to match Todos.jsx
-    scope="openid profile email read:todos write:todo delete:todo"
-    // 2. SECURITY FIX: Keeps you logged in on Chrome/Safari page reloads
+    // 1. FIXED: Changed everything to plural 'todos' to match what your NewTodo component requests
+    scope="openid profile email read:todos write:todos delete:todos"
     cacheLocation="localstorage"
+    // 2. FIXED: Added this flat property to allow token fetching without third-party cookie blocks
+    useRefreshTokens={true}
   >
     <App />
   </Auth0Provider>,

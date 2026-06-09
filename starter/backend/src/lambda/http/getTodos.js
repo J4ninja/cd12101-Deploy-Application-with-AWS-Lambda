@@ -16,8 +16,8 @@ export const handler = middy()
   )
   .handler(async (event) => {
     logger.info('Processing event: ', event)
-
-    const userId = getUserId(event)
+    const authorization = event.headers.Authorization
+    const userId = getUserId(authorization)
     const todos = await getAllTodos(userId)
 
     return {

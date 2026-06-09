@@ -18,7 +18,8 @@ export const handler = middy()
   .handler(async (event) => {
     logger.info('Processing event: ', event)
     const todoId = event.pathParameters.todoId
-    const userId = getUserId(event)
+    const authorization = event.headers.Authorization
+    const userId = getUserId(authorization)
     const validTodoId = await todoExists(userId, todoId)
 
     if (!validTodoId) {
