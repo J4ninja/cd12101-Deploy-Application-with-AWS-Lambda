@@ -1,6 +1,9 @@
 import { DynamoDB } from '@aws-sdk/client-dynamodb'
 import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb'
 import AWSXRay from 'aws-xray-sdk-core'
+import { createLogger } from '../../utils/logger.mjs'
+
+const logger = createLogger('todosAccess')
 
 export class TodosAccess {
   constructor(
@@ -15,7 +18,7 @@ export class TodosAccess {
   }
 
   async getAllTodos(userId) {
-    console.log('Getting all todos')
+    logger.info('Getting all todos')
 
     const result = await this.dynamoDbClient.query({
       TableName: this.todosTable,
@@ -31,7 +34,7 @@ export class TodosAccess {
   }
 
   async createTodo(todo) {
-    console.log(`Creating a todo with id ${todo.id}`)
+    logger.info(`Creating a todo with id ${todo.id}`)
 
     await this.dynamoDbClient.put({
       TableName: this.todosTable,
@@ -42,7 +45,7 @@ export class TodosAccess {
   }
 
   async deleteTodo(todo) {
-    console.log(`Deleting a todo with id ${todo.id}`)
+    logger.info(`Deleting a todo with id ${todo.id}`)
 
     await this.dynamoDbClient.delete({
       TableName: this.todosTable,
@@ -53,7 +56,7 @@ export class TodosAccess {
   }
 
   async updateTodo(todo) {
-    console.log(`Updating a todo with id ${todo.id}`)
+    logger.info(`Updating a todo with id ${todo.id}`)
 
     await this.dynamoDbClient.update({
       TableName: this.todosTable,

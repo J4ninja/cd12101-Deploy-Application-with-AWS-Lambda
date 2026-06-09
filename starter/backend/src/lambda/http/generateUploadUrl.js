@@ -3,6 +3,9 @@ import cors from '@middy/http-cors'
 import httpErrorHandler from '@middy/http-error-handler'
 import { todoExists, createImage, getUploadUrl } from '../fileStorage/attachmentUtils.mjs'
 import { getUserId } from '../auth/utils.mjs'
+import { createLogger } from '../../utils/logger.mjs'
+
+const logger = createLogger('generateUploadUrl')
 
 export const handler = middy()
   .use(httpErrorHandler())
@@ -12,7 +15,7 @@ export const handler = middy()
     })
   )
   .handler(async (event) => {
-    console.log('Processing event: ', event)
+    logger.info('Processing event: ', event)
     const imageId = event.pathParameters.groupId
     const validGroupId = await todoExists(groupId)
     const newTodo = JSON.parse(event.body)

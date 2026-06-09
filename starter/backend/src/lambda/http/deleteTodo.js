@@ -3,6 +3,9 @@ import cors from '@middy/http-cors'
 import httpErrorHandler from '@middy/http-error-handler'
 import { deleteTodo } from '../businessLogic/todos.mjs'
 import { getUserId } from '../auth/utils.mjs'
+import { createLogger } from '../../utils/logger.mjs'
+
+const logger = createLogger('deleteTodo')
 
 
 export const handler = middy()
@@ -13,7 +16,7 @@ export const handler = middy()
     })
   )
   .handler(async (event) => {
-    console.log('Processing event: ', event)
+    logger.info('Processing event: ', event)
     const todoId = event.pathParameters.todoId
     
     const authorization = event.headers.Authorization
