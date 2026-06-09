@@ -9,8 +9,7 @@
       "pattern": "^.*\\S.*$"
     },
     "dueDate": {
-      "type": "string",
-      "format": "date-time"
+      "type": "string"
     },
     "done": {
       "type": "boolean"
