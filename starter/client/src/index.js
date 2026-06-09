@@ -7,13 +7,19 @@ import './index.css'
 
 const domain = process.env.REACT_APP_AUTH0_DOMAIN
 const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID
+// Ensure this matches your Auth0 dashboard API identifier EXACTLY
+const audience = "https://1pk6kx4jsk.execute-api.us-east-1.amazonaws.com/dev/"
+
 ReactDOM.render(
   <Auth0Provider
     domain={domain}
     clientId={clientId}
     redirectUri={window.location.origin}
-    audience={`https://${domain}/api/v2/`}
-    scope="read:todo write:todo delete:todo"
+    audience={audience}
+    // 1. FIXED TYPO: Changed 'read:todo' to 'read:todos' to match Todos.jsx
+    scope="openid profile email read:todos write:todo delete:todo"
+    // 2. SECURITY FIX: Keeps you logged in on Chrome/Safari page reloads
+    cacheLocation="localstorage"
   >
     <App />
   </Auth0Provider>,
