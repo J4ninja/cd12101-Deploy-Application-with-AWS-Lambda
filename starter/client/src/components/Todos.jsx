@@ -18,7 +18,7 @@ import { NewTodoInput } from './NewTodoInput'
 
 export function Todos() {
   // const audience = // Change this line at the top of your Todos() function:
-  const audience = "https://1pk6kx4jsk.execute-api.us-east-1.amazonaws.com/dev/"
+  const audience = process.env.REACT_APP_AUTH0_AUDIENCE
 
   function renderTodos() {
     if (loadingTodos) {

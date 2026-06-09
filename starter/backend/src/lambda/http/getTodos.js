@@ -1,7 +1,7 @@
 import middy from '@middy/core'
 import cors from '@middy/http-cors'
 import httpErrorHandler from '@middy/http-error-handler'
-import { getAllTodos } from '../../businessLogic/todos.mjs'
+import { getAllTodos } from '../businessLogic/todos.mjs'
 import { getUserId } from '../auth/utils.mjs'
 import { createLogger } from '../../utils/logger.mjs'
 

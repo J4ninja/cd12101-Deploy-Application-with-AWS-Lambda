@@ -8,7 +8,7 @@ import './index.css'
 const domain = process.env.REACT_APP_AUTH0_DOMAIN
 const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID
 // Ensure this matches your Auth0 dashboard API identifier EXACTLY
-const audience = "https://1pk6kx4jsk.execute-api.us-east-1.amazonaws.com/dev/"
+const audience = process.env.REACT_APP_AUTH0_AUDIENCE
 
 ReactDOM.render(
   <Auth0Provider
